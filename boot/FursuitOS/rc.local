@@ -1,0 +1,19 @@
+#!/bin/sh -e
+### Pre-up FursuitOS  ###
+nohup socat tcp-listen:64738,reuseaddr,fork exec:/fs/reboot-watchdog.sh &
+/fs/hw/rpi_ws281x/test &
+export FURRY=/boot/FursuitOS
+ln -nfs $FURRY/wpa_supplicant.conf /etc/wpa_supplicant/
+ln -nfs $FURRY/interfaces /etc/network/
+ln -nfs $FURRY/smb.conf /etc/samba/smb.conf
+ln -nfs $FURRY/hostname /etc/hostname
+ln -nfs $FURRY/hosts /etc/hosts
+$FURRY/node-up.sh
+ntpdate time.nist.gov
+### Customize here    ###
+
+### Post-up FursuitOS ###
+cd /fs
+openvt -c7 -s /fs/fursuitos.py &
+### End startup       ###
+exit 0

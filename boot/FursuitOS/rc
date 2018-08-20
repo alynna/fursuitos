@@ -1,0 +1,2 @@
+#!/bin/bash
+bash /boot/FursuitOS/rc.local

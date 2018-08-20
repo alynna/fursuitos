@@ -1,0 +1,95 @@
+cfg:
+  blink_eyes:
+    eyel: '#0080ff'
+    eyer: '#0080ff'
+    mode: Custom
+    speed: 64
+    timeh: 8080
+    timel: 1520
+  common:
+    antl: '#ff8000'
+    antr: '#ff8000'
+    brightness: 255
+    dimmer: 29
+    eyel: '#004080'
+    eyer: '#004080'
+    reset: false
+  fursuit:
+    autorun:
+    - throb_antennae
+    - blink_eyes
+  rainbow_antennae:
+    last_action: cycle
+    speed: 255
+  rainbow_eyes:
+    last_action: rainbow
+    speed: 255
+  solid_antennae:
+    antl: '#ff00ff'
+    antr: '#00ffff'
+    mode: Random
+    speed: 64
+    time: 5000
+  solid_eyes:
+    eyel: '#ffff00'
+    eyer: '#ff00ff'
+    mode: Random
+    speed: 64
+    time: 1500
+  throb_antennae:
+    antl: '#ff0300'
+    antr: '#0037ff'
+    mode: Custom
+    speed: 167
+  throb_eyes:
+    eyel: '#ff78e4'
+    eyer: '#00c3ff'
+    mode: Custom
+    speed: 255
+hw:
+  led:
+    antl:
+      index: 0
+      interface: neopx
+    antr:
+      index: 1
+      interface: neopx
+    eyel:
+      index: 2
+      interface: neopx
+    eyer:
+      index: 3
+      interface: neopx
+iot:
+  host: fursuit.kitsunet.net
+  port: 8472
+mod:
+  blink_eyes:
+    render: 15
+  common:
+    load: 0
+    render: 0
+  fursuit:
+    load: 1
+    render: 2147483647
+  rainbow_antennae:
+    render: 63
+  rainbow_eyes:
+    render: 63
+  solid_antennae:
+    render: 15
+  solid_eyes:
+    render: 15
+  throb_antennae:
+    render: 8
+  throb_eyes:
+    render: 8
+mutuals:
+  tails: https://t-fursuit.kitsunet.net/
+name: alynna
+node: 240
+part: head
+ui:
+  bind: 0.0.0.0
+  port: 80
+  title: Alynna's Fursuit
