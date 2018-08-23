@@ -7,13 +7,15 @@ import time
 
 # Priority load and render order 0..255 (everything else is loaded last)
 #if not config.c.mod.rainbow.load: config.c.mod.rainbow.load = <priority>
-if not config.c.mod.rainbow.render: config.c.mod.rainbow.render = 63
+if not config.c.mod.rainbow.render: 
+    config.c.mod.rainbow.render = 64
+    config.save()
 
 tails = r.hw.drv.neopx.px
 defaults = Dict({ "speed": 64 })
 
 if not config.c.cfg.rainbow or config.c.cfg.rainbow == "None":
-    config.c.cfg.rainbow = defaults
+    config.c.cfg.rainbow.update(defaults)
     config.save()
 
 conf = config.c.cfg.rainbow
@@ -37,18 +39,6 @@ def colorWipe(color):
         tails.show()
         time.sleep(1.0/(conf.speed*4))
 
-def theaterChase(color):
-    """Movie theater light style chaser animation."""
-    while True:
-        for q in range(3):
-            for i in range(0, tails.numPixels(), 3):
-                tails.setPixelColor(i+q, color)
-            tails.show()
-            time.sleep(1.0/(conf.speed*4))
-            for i in range(0, tails.numPixels(), 3):
-                tails.setPixelColor(i+q, 0)
-        if r.proc["chase"].die: return
-
 def rainbow():
     """Draw rainbow that fades across all pixels at once."""
     j=0
@@ -57,7 +47,7 @@ def rainbow():
         for i in range(tails.numPixels()):
             tails.setPixelColor(i, wheel((i+j) & 255))
         tails.show()
-        if r.proc["rainbow"].die: return
+        if r.proc["rainbow_tails"].die: return
         time.sleep(4*(1/conf.speed))
 
 def rainbowCycle():
@@ -68,7 +58,7 @@ def rainbowCycle():
         for i in range(tails.numPixels()):
             tails.setPixelColor(i, wheel((int(i * 256 / tails.numPixels()) + j) & 255))
         tails.show()
-        if r.proc["cycle"].die: return
+        if r.proc["cycle_tails"].die: return
         time.sleep(4*(1/conf.speed))
 
 def rainbowChase():
@@ -81,7 +71,7 @@ def rainbowChase():
                 for i in range(0, tails.numPixels(), 3):
                     tails.setPixelColor(i+q, wheel((i+j) % 255))
                 tails.show()
-                if r.proc["chase"].die: return
+                if r.proc["chase_tails"].die: return
                 time.sleep(4*(1/conf.speed))
                 for i in range(0, tails.numPixels(), 3):
                     tails.setPixelColor(i+q, 0)

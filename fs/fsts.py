@@ -75,12 +75,16 @@ def stop(name):
         r.proc[name].process.terminate()
         time.sleep(0.09)
     else:
-        if callable(r.proc[name].process.is_alive()):
+        if callable(r.proc[name].process.is_alive):
             r.proc[name].die = True
+            tries = 0
             while r.proc[name].process.is_alive():
-                r.proc[name].process.join(0.01)
-                time.sleep(0.09)
-    del r.proc[name]
+                r.proc[name].process.join(0.05)
+                time.sleep(0.05)
+                tries += 1
+                if tries >= 5: break  # *shrug* we tried..
+    try:    del r.proc[name]
+    except: pass
     ps()
         
 def killall():
@@ -91,11 +95,10 @@ def crond():
     """Runs scheduled processes with a resolution of a second.
     NOTE that your process is only guaranteed to run within that second, not at the beginning."""
     tick = 0   # Immediate check when cron starts for jobs.
-    while True:
+    while not r.proc["VixenCron"].die:
         # Snooze till the next second.
         while tick >= math.floor(time.time()):
             time.sleep(0.5)
-            if r.proc["VixenCron"].die: return
         tick = math.floor(time.time())
         # Schedule any due cron jobs.
         for j in [*r.cron]:

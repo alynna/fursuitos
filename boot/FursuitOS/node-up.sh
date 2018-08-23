@@ -2,7 +2,7 @@
 
 # Do DHCP ourselves.
 ip -4 addr flush dev wlan0
-dhclient -1 -v wlan0
+dhclient -v wlan0
 
 # Correct hostname 
 hostname `cat /boot/FursuitOS/hostname`
@@ -21,6 +21,7 @@ ip -4 addr add ${X} broadcast + dev wlan0
 
 # SHOW US WHAT YOU GOT
 ip -4 addr show dev wlan0
+echo `ip -4 addr list dev wlan0 | grep "scope global wlan0" | grep "$X1" | cut -d' ' -f6 | cut -d'/' -f1` > /run/shm/ip
 
 # Add ourselves to the host file.
 cat >/boot/FursuitOS/hosts <<EOF
@@ -30,3 +31,10 @@ ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
 EOF
 echo "127.0.1.1       $(cat /boot/FursuitOS/hostname)" >> /boot/FursuitOS/hosts
+GW=`ip -4 route | grep default | cut -d' ' -f3`
+if [ "$GW" = "" ]; then 
+  $0 &
+else
+ export GW
+ echo $GW > /run/shm/gateway
+fi

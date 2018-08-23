@@ -2,10 +2,15 @@ import ui
 from addict import Dict
 import config
 import r
+import fsts
 
 # Priority load and render order 0..255 (everything else is loaded last in any order)
-if not config.c.mod.common.load: config.c.mod.common.load = 0
-if not config.c.mod.common.render: config.c.mod.common.render = 0
+if not config.c.mod.common.load: 
+    config.c.mod.common.load = 0
+    config.save()
+if not config.c.mod.common.render: 
+    config.c.mod.common.render = 0
+    config.save()
 
 tails = r.hw.drv.neopx.px
 
@@ -20,7 +25,7 @@ defaults = Dict({
     })
 
 if not config.c.cfg.common:
-    config.c.cfg.common = defaults
+    config.c.cfg.common.update(defaults)
     config.save()
 conf = config.c.cfg.common
 
@@ -37,16 +42,20 @@ def ui_gen():
     u.req("color", "b", "Blue tail")
     u.req("color", "i", "Indigo tail")
     u.req("color", "v", "Violet tail")
-    u.req("checkbox", "reset", "Reset colors to defaults")
+    u.req("action", "reset", "Reset colors to defaults")
     u.run("Save settings")
     return u.end()
 
 def handler(params):
     global conf
-    if conf.reset:
-        del conf.reset
-        conf = defaults
+    action = ""
+    try:
+        action = params["action"][0]
+    except: pass
+    if action == "reset":
+        config.c.cfg.common.update(defaults)
         config.save()
+    fsts.stopgroup("tails")
     tails["r"]=conf["r"]
     tails["o"]=conf["o"]
     tails["g"]=conf["g"]

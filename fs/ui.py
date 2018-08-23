@@ -279,9 +279,7 @@ class FursuitUI(BaseHTTPRequestHandler):
             self.render_page("Registry", """<div style="white-space: pre-wrap; font-family:monospace;">"""+escape(r.regdump())+"</div>")
         elif module == "reload":
             self.render_page("Reload", """<p>Reloading OS, may be unavailable for a few seconds...</p><a href="/" class="lbutton">Home</a>""")
-            os.system("""bash -c "sleep 1; cd /fs; ./fursuitos.py" &""")
-            os.system("""pkill -9 -f "python3.*fursuitos" """)
-            sys.exit(1)
+            r.STOP("restart")
         elif module == "favicon.ico":
             self.send_response(200)
             self.end_headers()

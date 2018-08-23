@@ -32,7 +32,8 @@ class LED(Adafruit_NeoPixel):
         super().__init__(self.LED_COUNT, self.LED_PIN, self.LED_FREQ_HZ, self.LED_DMA, self.LED_INVERT, self.LED_BRIGHTNESS, self.LED_CHANNEL)
         self.leds = [0 for i in range(self.LED_COUNT)]
         self.shm = shm
-        r.say("neopx: shared memory size is {x}".format(x=self.shm.resize(self.LED_COUNT*4)))
+        self.shm.resize(self.LED_COUNT*4)
+        r.say("[neopx] shared memory size is {x}".format(x=self.LED_COUNT*4))
         try:
             self.read()
         except:
@@ -111,13 +112,22 @@ class LED(Adafruit_NeoPixel):
         return self.numPixels()
     def __default__(self):
         return self.getPixels()
+    def fill(self, color, show=False):
+        """Wipe color across display a pixel at a time."""
+        for i in range(self.numPixels()):
+            self.setPixelColor(i, color)
+            if show: self.show()
     def off(self):
-        for x in range(0,self.numPixels(),1):
-            self.setBrightness(0)
-            self.show()
+        for i in range(self.numPixels()):
+            self.setPixelColor(i, Color(0,0,0))
+        self.show()
+        time.sleep(0.001)
     def brightness(self,b):
         self.setBrightness(b)
         self.show()
+
+def off():
+    px.off()
 
 # Main screen turn on
 px = LED()

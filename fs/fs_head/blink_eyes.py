@@ -15,11 +15,13 @@ defaults = Dict({
     "speed": 64,
     "eyel": "#ff8000",
     "eyer": "#ff8000",
+    "timel": 5000,
+    "timeh": 15000,
     "mode": "Default",
     })
 
 if not config.c.cfg.blink_eyes or config.c.cfg.blink_eyes == "None":
-    config.c.cfg.blink_eyes = defaults
+    config.c.cfg.blink_eyes.update(defaults)
     config.save()
 
 conf = config.c.cfg.blink_eyes
@@ -35,16 +37,16 @@ def dimmer(x):
 def blink():
     global conf,com
     try:
-        if conf.mode == "Custom":
-            eyel = conf.eyel
-            eyer = conf.eyer
-        elif conf.mode == "Random":
-            eyel = None
-            eyel = None
-        else:
-            eyel = com.eyel
-            eyer = com.eyer
         while True:
+            if conf.mode == "Custom":
+                eyel = conf.eyel
+                eyer = conf.eyer
+            elif conf.mode == "Random":
+                eyel = None
+                eyer = None
+            else:
+                eyel = com.eyel
+                eyer = com.eyer
             if conf.mode == "Random":
                 randl = random.randint(0,16777216)
                 randr = random.randint(0,16777216)
@@ -81,9 +83,9 @@ def ui_gen():
     u.req("color", "eyer", "Right custom color")
     options = [ "Default", "Custom", "Random" ]
     u.req("radio", "mode", "Color set", options=options)
-    u.req("range", "timel", "Min blink time", low=500, high=60000, step=10)
-    u.req("range", "timeh", "Max blink time", low=500, high=60000, step=10)
-    u.run("Activate blink")
+    u.req("range", "timel", "Min blink time", low=500, high=20000, step=10)
+    u.req("range", "timeh", "Max blink time", low=500, high=20000, step=10)
+    u.run("[Eyes] Activate Blinking")
     return u.end()
 
 def handler(params):

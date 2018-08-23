@@ -7,7 +7,9 @@ import fsts
 
 # Priority load and render order 0..255 (everything else is loaded last)
 #if not config.c.mod.rainbow.load: config.c.mod.rainbow.load = <priority>
-if not config.c.mod.rainbow.render: config.c.mod.rainbow.render = 2
+if not config.c.mod.rainbow.render: 
+    config.c.mod.rainbow.render = 16
+    config.save()
 
 tails = r.hw.drv.neopx.px
 
@@ -16,10 +18,9 @@ defaults = Dict({
     })
 
 if not config.c.cfg.profile:
-    config.c.cfg.profile = defaults
+    config.c.cfg.profile.update(defaults)
     config.save()
 conf = c.cfg.profile
-    
 com = c.cfg.common
 
 def ui_gen():

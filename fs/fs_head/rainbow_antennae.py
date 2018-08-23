@@ -16,7 +16,7 @@ defaults = Dict({
     })
 
 if not config.c.cfg.rainbow_antennae or config.c.cfg.rainbow_antennae == "None":
-    config.c.cfg.rainbow_antennae = defaults
+    config.c.cfg.rainbow_antennae.update(defaults)
     config.save()
 
 conf = config.c.cfg.rainbow_antennae
@@ -61,7 +61,7 @@ def ui_gen():
     u.req("range", "speed", "Speed of animation", low=1, high=255, step=1)
     u.run("Save changes to speed")
     u.req("action", "cycle", "Do cycling rainbow anim")
-    u.req("action", "rainbow", "Do rainbow anim")
+    u.req("action", "rainbow", "[Antennae] Go rainbow")
     return u.end()
 
 def handler(params):

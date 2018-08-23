@@ -19,7 +19,7 @@ defaults = Dict({
     })
 
 if not config.c.cfg.solid_eyes or config.c.cfg.solid_eyes == "None":
-    config.c.cfg.solid_eyes = defaults
+    config.c.cfg.solid_eyes.update(defaults)
     config.save()
 
 conf = config.c.cfg.solid_eyes
@@ -78,7 +78,7 @@ def ui_gen():
     options = [ "Default", "Custom", "Random" ]
     u.req("radio", "mode", "Color set", options=options)
     u.req("number", "time", "Time between changes (ms)", low=0, high=86400000, step=10)
-    u.run("Activate solid")
+    u.run("[Eyes] Go solid color")
     return u.end()
 
 def handler(params):

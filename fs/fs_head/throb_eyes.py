@@ -27,7 +27,7 @@ defaults = Dict({
     })
 
 if not config.c.cfg.throb_eyes or config.c.cfg.throb_eyes == "None":
-    config.c.cfg.throb_eyes = defaults
+    config.c.cfg.throb_eyes.update(defaults)
     config.save()
 
 conf = config.c.cfg.throb_eyes
@@ -85,7 +85,7 @@ def ui_gen():
     options = [ "Default", "Custom", "Random" ]
     u.req("radio", "mode", "Throb moode", options=options)
     u.req("range", "speed", "Throb speed", low=1, high=255, step=1)
-    u.run("Activate throbbing")
+    u.run("[Eyes] Activate throbbing")
     return u.end()
 
 def handler(params):

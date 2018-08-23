@@ -8,7 +8,7 @@ echo "root:$SSHPASS" | chpasswd
 
 apt -y update
 apt -y upgrade
-apt -y install sshpass mc rsync git samba scons python3-pip python-pip python3-dev python-dev swig idle3 socat ntpdate
+apt -y install sshpass mc rsync git samba scons python3-pip python3-dev swig idle3 socat ntpdate
 pip3 install addict camel shyaml
 
 mkdir -p /fs
@@ -44,8 +44,6 @@ scons
 cd /fs/hw/rpi_ws281x/python/
 python3 setup.py build
 python3 setup.py install
-python setup.py build
-python setup.py install
 cd /fs
 echo ">> Recommend to customize with raspi-config, then reboot!"
 unset SSHPASS

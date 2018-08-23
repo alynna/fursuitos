@@ -16,7 +16,7 @@ defaults = Dict({
     })
 
 if not config.c.cfg.rainbow_eyes or config.c.cfg.rainbow_eyes == "None":
-    config.c.cfg.rainbow_eyes = defaults
+    config.c.cfg.rainbow_eyes.update(defaults)
     config.save()
 
 conf = config.c.cfg.rainbow_eyes
@@ -68,7 +68,7 @@ def ui_gen():
     u.req("range", "speed", "Speed of animation", low=1, high=255, step=1)
     u.run("Save changes to speed")
     u.req("action", "cycle", "Do cycling rainbow anim")
-    u.req("action", "rainbow", "Do rainbow anim")
+    u.req("action", "rainbow", "[Eyes] Go rainbow")
     return u.end()
 
 def handler(params):

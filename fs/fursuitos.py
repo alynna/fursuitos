@@ -106,18 +106,15 @@ httpd = HTTPServer(server_address, ui.FursuitUI)
 r.say("\nProcesses:")
 os.system("pkill -9 -f /fs/hw/rpi_ws281x/test")
 ts.bgthread("httpd", httpd.serve_forever)
-ts.ps()
+r.say("Gateway: {0}".format(r.extget("gateway")))
 r.say("FursuitOS v{0} (C) 2018 Alynna Trypnotk, GPL3".format(r.version))
 r.say('[UI] Started')
+
+# Mane loop
 try:
     while True: time.sleep(1)
 except KeyboardInterrupt as e:
-    ts.killall()
-    r.say("[ALL YO YENS YIP YIP YAP] Closing FursuitOS shell.")
-    sys.exit(0)
+    r.STOP("stop")
 except Exception as e:
     r.ERR()
-    ts.killall()
-    r.say("[YERF] Foxy died..")
-    sys.exit(0)
-
+    r.STOP("stop")

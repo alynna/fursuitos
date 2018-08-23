@@ -19,7 +19,7 @@ defaults = Dict({
     })
 
 if not config.c.cfg.throb_antennae or config.c.cfg.throb_antennae == "None":
-    config.c.cfg.throb_antennae = defaults
+    config.c.cfg.throb_antennae.update(defaults)
     config.save()
 
 conf = config.c.cfg.throb_antennae
@@ -77,7 +77,7 @@ def ui_gen():
     options = [ "Default", "Custom", "Random" ]
     u.req("radio", "mode", "Throb moode", options=options)
     u.req("range", "speed", "Throb speed", low=1, high=255, step=1)
-    u.run("Activate throbbing")
+    u.run("[Antennae] Activate throbbing")
     return u.end()
 
 def handler(params):

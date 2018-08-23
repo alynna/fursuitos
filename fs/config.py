@@ -79,7 +79,7 @@ def reset():
 
 def mkmutual(node):
     if isinstance(node, int):
-        who_are_they=whoami.split(".")[0:3] + [str(node)]
+        who_are_they=r.extreg["gateway"].split(".")[0:3] + [str(node)]
         return "http://{0}.{1}.{2}.{3}/".format(who_are_they[0],who_are_they[1],who_are_they[2],who_are_they[3])
     else:
         return node
@@ -90,8 +90,4 @@ else:
     save()
     r.say("[FSConfig] Reset Config.")
 
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("1.1.1.1", 53))
-whoami = s.getsockname()[0]
-s.close()
 r.say(Camel([caramel]).dump(c.to_dict()))

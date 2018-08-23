@@ -1,5 +1,7 @@
 #!/bin/sh -e
 ### Pre-up FursuitOS  ###
+bluetoothctl power off
+service bluetooth stop
 nohup socat tcp-listen:64738,reuseaddr,fork exec:/fs/reboot-watchdog.sh &
 /fs/hw/rpi_ws281x/test &
 export FURRY=/boot/FursuitOS
