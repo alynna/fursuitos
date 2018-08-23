@@ -30,12 +30,6 @@ ff02::2         ip6-allrouters
 EOF
 echo "127.0.1.1       $(cat /etc/hostname)" >> /etc/hosts
 
-cat <<EOF >/tmp/crontab
-# m h d mo dow  command
-* * * * * /bin/bash -c "/usr/bin/logger Router: $(/boot/FursuitOS/node-stay-up.sh)"
-EOF
-cat /tmp/crontab | crontab -
-
 cd /fs/hw/
 git clone https://github.com/jgarff/rpi_ws281x.git
 cd /fs/hw/rpi_ws281x
