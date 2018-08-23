@@ -79,7 +79,7 @@ def reset():
 
 def mkmutual(node):
     if isinstance(node, int):
-        who_are_they=r.extreg["gateway"].split(".")[0:3] + [str(node)]
+        who_are_they=r.extget("gateway").split(".")[0:3] + [str(node)]
         return "http://{0}.{1}.{2}.{3}/".format(who_are_they[0],who_are_they[1],who_are_they[2],who_are_they[3])
     else:
         return node

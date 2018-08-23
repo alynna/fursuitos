@@ -1,7 +1,6 @@
 #!/bin/sh -e
 ### Pre-up FursuitOS  ###
-bluetoothctl power off
-service bluetooth stop
+rfkill block bluetooth
 nohup socat tcp-listen:64738,reuseaddr,fork exec:/fs/reboot-watchdog.sh &
 /fs/hw/rpi_ws281x/test &
 export FURRY=/boot/FursuitOS
@@ -10,7 +9,7 @@ ln -nfs $FURRY/interfaces /etc/network/
 ln -nfs $FURRY/smb.conf /etc/samba/smb.conf
 ln -nfs $FURRY/hostname /etc/hostname
 ln -nfs $FURRY/hosts /etc/hosts
-$FURRY/node-up.sh
+(while ((1)); do $FURRY/node-stay-up.sh; sleep 60; done) &
 ntpdate time.nist.gov
 ### Customize here    ###
 

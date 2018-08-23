@@ -1,11 +1,14 @@
 #!/bin/bash
-
-# Do DHCP ourselves.
-ip -4 addr flush dev wlan0
-dhclient -v wlan0
-
+pgrep -f node-up.sh
+if [ $(pgrep -c -f node-up.sh) -gt 2 ]; then exit 0; fi
 # Correct hostname 
 hostname `cat /boot/FursuitOS/hostname`
+
+# Do DHCP ourselves.
+ifdown --force wlan0 || true
+ifup wlan0
+ip -4 addr flush dev wlan0
+dhclient -v wlan0 -e clientid=`hostname`
 
 # Get IP
 X=`ip -4 addr list dev wlan0 | grep "scope global wlan0" | cut -d' ' -f6`
