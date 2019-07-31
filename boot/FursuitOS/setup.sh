@@ -8,7 +8,7 @@ echo "root:$SSHPASS" | chpasswd
 
 apt -y update
 apt -y upgrade
-apt -y install sshpass mc rsync git samba scons python3-pip python3-dev swig idle3 socat ntpdate
+apt -y install openssh-server sshpass mc rsync git samba scons python3-pip python3-dev swig idle3 socat ntpdate
 pip3 install addict camel shyaml
 
 mkdir -p /fs

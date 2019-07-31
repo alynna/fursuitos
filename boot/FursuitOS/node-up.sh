@@ -11,7 +11,7 @@ ip -4 addr flush dev wlan0
 dhclient -v wlan0 -e clientid=`hostname`
 
 # Get IP
-X=`ip -4 addr list dev wlan0 | grep "scope global wlan0" | cut -d' ' -f6`
+X=`ip -4 addr list dev wlan0 | grep "inet.*wlan0" | cut -d' ' -f6`
 
 # Mutilate IP to get one matching our node number.
 X0=`echo $X | cut -d'.' -f1-3`
@@ -24,7 +24,7 @@ ip -4 addr add ${X} broadcast + dev wlan0
 
 # SHOW US WHAT YOU GOT
 ip -4 addr show dev wlan0
-echo `ip -4 addr list dev wlan0 | grep "scope global wlan0" | grep "$X1" | cut -d' ' -f6 | cut -d'/' -f1` > /run/shm/ip
+echo `ip -4 addr list dev wlan0 | grep "inet.*wlan0" | grep "$X1" | cut -d' ' -f6 | cut -d'/' -f1` > /run/shm/ip
 
 # Add ourselves to the host file.
 cat >/boot/FursuitOS/hosts <<EOF
